@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - SideMenu
+  - SideMenu_Default
+  - SideMenu_Login
+  - SideMenu_Register
+  - SideMenu_ShowMenu
+  - SideMenu_Main
   layers:
   - Default
   - TransparentFX
