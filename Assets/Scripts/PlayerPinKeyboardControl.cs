@@ -7,7 +7,7 @@ public class PlayerPinKeyboardControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		this.camera = GameObject.FindGameObjectWithTag("MainCamera");
 	}
 	
 	// Update is called once per frame
@@ -28,5 +28,6 @@ public class PlayerPinKeyboardControl : MonoBehaviour {
 		}
 
 		transform.position += _velocity;
+		this.camera.transform.position += this.velocity;
 	}
 }
