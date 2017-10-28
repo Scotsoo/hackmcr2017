@@ -6,6 +6,7 @@ public class LetterSpawner : MonoBehaviour {
 
 	public float spawnFrequency = 1.0f; // spawn frequency in seconds
 	public float spawnRadius = 10.0f; // spawn radius around player
+	public float spawnDuration = 5.0f; // life of spawned objects
 	public GameObject spawnCenterObject; // object to spawn around
 	public GameObject[] spawnObjects; // array of prefabs to generate
 
@@ -41,6 +42,8 @@ public class LetterSpawner : MonoBehaviour {
 
 			GameObject spawnedObject = Instantiate(spawnObjects[index], randomPosition, Quaternion.identity);
 			spawnedObject.transform.parent = this.transform;
+			spawnedObject.AddComponent<DestroySelfAfterTime>();
+			spawnedObject.GetComponent<DestroySelfAfterTime>().lifeInSeconds = spawnDuration;
 		}
 	}
 }
