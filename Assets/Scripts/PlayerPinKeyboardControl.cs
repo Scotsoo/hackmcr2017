@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerPinKeyboardControl : MonoBehaviour {
 
-	private Vector3 velocity = Vector3.zero;
-	public float speed = 0.1f;
+	private Vector3 _velocity = Vector3.zero;
+	public float Speed = 0.1f;
 
 	// Use this for initialization
 	void Start () {
@@ -14,21 +12,21 @@ public class PlayerPinKeyboardControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		this.velocity = Vector3.zero;
+		_velocity = Vector3.zero;
 
 		if (Input.GetKey(KeyCode.W)) {
-			this.velocity += new Vector3(this.speed, 0, 0);
+			_velocity += new Vector3(Speed, 0, 0);
 		}
 		if (Input.GetKey(KeyCode.S)) {
-			this.velocity -= new Vector3(this.speed, 0, 0);
+			_velocity -= new Vector3(Speed, 0, 0);
 		}
 		if (Input.GetKey(KeyCode.A)) {
-			this.velocity += new Vector3(0, 0, this.speed);
+			_velocity += new Vector3(0, 0, Speed);
 		}
 		if (Input.GetKey(KeyCode.D)) {
-			this.velocity -= new Vector3(0, 0, this.speed);
+			_velocity -= new Vector3(0, 0, Speed);
 		}
 
-		this.transform.position += this.velocity;
+		transform.position += _velocity;
 	}
 }
