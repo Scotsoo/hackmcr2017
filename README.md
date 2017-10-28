@@ -1,2 +1,2 @@
 # hackmcr2017
-Dunnhumby Hack Manchester
+Ombudsman Hack Manchester
