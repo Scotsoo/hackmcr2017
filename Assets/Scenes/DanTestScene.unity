@@ -255,11 +255,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114518261222018890, guid: 94987e01ad15c446d8feb957ef7c250c,
-        type: 2}
-      propertyPath: spawnObjects.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4524050385740396, guid: 94987e01ad15c446d8feb957ef7c250c, type: 2}
       propertyPath: m_LocalPosition.x
       value: -0.059376717
@@ -297,27 +292,6 @@ Prefab:
       propertyPath: spawnCenterObject
       value: 
       objectReference: {fileID: 1651644653}
-    - target: {fileID: 114518261222018890, guid: 94987e01ad15c446d8feb957ef7c250c,
-        type: 2}
-      propertyPath: spawnFrequency
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114518261222018890, guid: 94987e01ad15c446d8feb957ef7c250c,
-        type: 2}
-      propertyPath: spawnObjects.Array.data[0]
-      value: 
-      objectReference: {fileID: 1214999031296884, guid: a1aa91985495c4342b1285f48b9f778a,
-        type: 2}
-    - target: {fileID: 114518261222018890, guid: 94987e01ad15c446d8feb957ef7c250c,
-        type: 2}
-      propertyPath: spawnRadius
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114518261222018890, guid: 94987e01ad15c446d8feb957ef7c250c,
-        type: 2}
-      propertyPath: spawnDuration
-      value: 5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 94987e01ad15c446d8feb957ef7c250c, type: 2}
   m_IsPrefabParent: 0
