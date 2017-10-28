@@ -10,6 +10,7 @@ TagManager:
   - SideMenu_Register
   - SideMenu_ShowMenu
   - SideMenu_Main
+  - Letter
   layers:
   - Default
   - TransparentFX
