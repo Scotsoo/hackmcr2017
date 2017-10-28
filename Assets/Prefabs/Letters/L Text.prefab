@@ -87,8 +87,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.2, y: 2.1, z: 0.5}
-  m_Center: {x: 0.7650001, y: -1.3964845, z: 0}
+  m_Size: {x: 1.5, y: 2.1, z: 0.5}
+  m_Center: {x: 0.6850001, y: -1.3964845, z: 0}
 --- !u!102 &102894903240180010
 TextMesh:
   serializedVersion: 3

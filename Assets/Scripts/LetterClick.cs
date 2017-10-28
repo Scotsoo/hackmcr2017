@@ -2,11 +2,18 @@
 
 public class LetterClick : MoanymonBehaviour
 {
-    //// Use this for initialization
-    //void Start()
-    //{
-    //    base.Start();
-    //}
+    private Inventory _inventory;
+    private string _text;
+    private GameObject _textObject;
+
+    // Use this for initialization
+    new void Start()
+    {
+        base.Start();
+        _inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        var mesh = (TextMesh) gameObject.GetComponent(typeof(TextMesh));
+        _text = mesh.text;
+    }
 
     // Update is called once per frame
     void Update()
@@ -18,8 +25,8 @@ public class LetterClick : MoanymonBehaviour
     {
         if (DetectClick())
         {
-            Debug.Log("Raycast hit");
-            // TODO Do add to inventory shit and remove from plane
+            _inventory.Add(_text);
+            Destroy(gameObject);
         }
     }
 }
