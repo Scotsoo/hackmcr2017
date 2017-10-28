@@ -9,33 +9,33 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1684771104898486}
+  m_RootGameObject: {fileID: 1942867437667988}
   m_IsPrefabParent: 1
---- !u!1 &1684771104898486
+--- !u!1 &1942867437667988
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4889345854640094}
-  - component: {fileID: 23960954905900438}
-  - component: {fileID: 102215467558120196}
-  - component: {fileID: 114132831209204240}
-  - component: {fileID: 65677124848845474}
+  - component: {fileID: 4410336368386606}
+  - component: {fileID: 23657790617414928}
+  - component: {fileID: 102354503701995448}
+  - component: {fileID: 114741702221094066}
+  - component: {fileID: 65040663823685006}
   m_Layer: 0
-  m_Name: G Text
+  m_Name: K Text
   m_TagString: Letter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4889345854640094
+--- !u!4 &4410336368386606
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1684771104898486}
+  m_GameObject: {fileID: 1942867437667988}
   m_LocalRotation: {x: 0, y: 0.71934, z: -0, w: -0.6946582}
   m_LocalPosition: {x: -0.473, y: 3.016, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -43,12 +43,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 268, z: 0}
---- !u!23 &23960954905900438
+--- !u!23 &23657790617414928
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1684771104898486}
+  m_GameObject: {fileID: 1942867437667988}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -77,26 +77,26 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &65677124848845474
+--- !u!65 &65040663823685006
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1684771104898486}
+  m_GameObject: {fileID: 1942867437667988}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.2, y: 2.1, z: 0.5}
   m_Center: {x: 0.7650001, y: -1.3964845, z: 0}
---- !u!102 &102215467558120196
+--- !u!102 &102354503701995448
 TextMesh:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1684771104898486}
-  m_Text: G
+  m_GameObject: {fileID: 1942867437667988}
+  m_Text: K
   m_OffsetZ: 0
   m_CharacterSize: 0.1
   m_LineSpacing: 1
@@ -110,12 +110,12 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4278190333
---- !u!114 &114132831209204240
+--- !u!114 &114741702221094066
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1684771104898486}
+  m_GameObject: {fileID: 1942867437667988}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3efa9d1baeee00459949e09aad22ec0, type: 3}
