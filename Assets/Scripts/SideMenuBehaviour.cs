@@ -53,7 +53,7 @@ public class SideMenuBehaviour : MonoBehaviour {
     }
     public void Login_OnClick()
     {
-        mainMenu.IsVisible = false;
+        defaultMenu.IsVisible = false;
         loginMenu.IsVisible = true;
         mainMenu.Update();
         loginMenu.Update();
