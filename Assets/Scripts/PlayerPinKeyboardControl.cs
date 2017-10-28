@@ -5,11 +5,12 @@ using UnityEngine;
 public class PlayerPinKeyboardControl : MonoBehaviour {
 
 	private Vector3 velocity = Vector3.zero;
+	private GameObject camera;
 	public float speed = 0.1f;
 
 	// Use this for initialization
 	void Start () {
-		
+		this.camera = GameObject.FindGameObjectWithTag("MainCamera");
 	}
 	
 	// Update is called once per frame
@@ -30,5 +31,6 @@ public class PlayerPinKeyboardControl : MonoBehaviour {
 		}
 
 		this.transform.position += this.velocity;
+		this.camera.transform.position += this.velocity;
 	}
 }
