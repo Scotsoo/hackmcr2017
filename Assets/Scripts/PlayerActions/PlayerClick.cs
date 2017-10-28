@@ -4,12 +4,6 @@ namespace Assets.Scripts.PlayerActions
 {
     public class PlayerClick : MoanymonBehaviour
     {
-        //// Use this for initialization
-        //void Start()
-        //{
-        //    base.Start();
-        //}
-
         // Update is called once per frame
         void Update()
         {

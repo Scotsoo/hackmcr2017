@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -7,53 +9,89 @@ using UnityEngine.UI;
 
 public class SideMenuBehaviour : MonoBehaviour {
 
-    public class SideMenu
+
+    public class Menu
     {
-        public SideMenu(string tag, bool defaultVisible = false)
+        public Canvas Canvas { get; private set; }
+        public string _tag { get; set; }
+        public bool IsVisible { get; set; }
+
+        public Menu(string tag)
         {
             this._tag = tag;
             this.Canvas = Helpers.GetObjectWithTag<Canvas>(this._tag);
-            IsVisible = defaultVisible;
         }
-        public Canvas Canvas { get; private set; }
-        private string _tag { get; set; }
-        public bool IsVisible { get; set; }
 
         public void Update()
         {
+            Debug.Log(_tag);
             Canvas.gameObject.SetActive(IsVisible);
         }
     }
+
+    public class SideMenu : Menu
+    {
+        public SideMenu(string tag, bool defaultVisible = false) : base(tag)
+        {
+            IsVisible = defaultVisible;
+        }
+
+  
+    }
+
+    public class MainMenu : Menu
+    {
+        public MainMenu(string tag) : base(tag)
+        {
+        }
+    }
+ 
 
     private Button showMenuButton;
 
     private Text showMenuButtonText;
 
     // main menu wrapper
-    private SideMenu mainMenu;
+    private static SideMenu mainMenu;
     // login, register ect
-    private SideMenu defaultMenu;
+    private static SideMenu defaultMenu;
     // register stuff
-    private SideMenu registerMenu;
+    private static SideMenu registerMenu;
     // login stuff
-    private SideMenu loginMenu;
+    private static SideMenu loginMenu;
 
+    private static SideMenu sideMenu;
+
+    // Main Menus
+    private static MainMenu letterMenu;
+
+    private static MainMenu letterListMenu;
+
+    private List<Menu> menus;
+    
     // Use this for initialization
     void Start ()
     {
+        sideMenu = new SideMenu("SideMenu", true);
         mainMenu = new SideMenu("SideMenu_Main", true);
         defaultMenu = new SideMenu("SideMenu_Default", true);
         loginMenu = new SideMenu("SideMenu_Login");
         registerMenu = new SideMenu("SideMenu_Register");
         showMenuButton = Helpers.GetObjectWithTag<Button>("SideMenu_ShowMenu");
         showMenuButtonText = showMenuButton.GetComponentInChildren(typeof(Text)).GetComponent<Text>();
+        letterMenu = new MainMenu("FullMenu_Main");
+        letterListMenu = new MainMenu("FullMenu_Letter_List");
         SetMenuText();
+        menus = new List<Menu> { mainMenu, defaultMenu, registerMenu, loginMenu, sideMenu, letterMenu };
+
     }
 
     void SetMenuText()
     {
         showMenuButtonText.text = (mainMenu.IsVisible ? "Hide" : "Show") + " Menu";
     }
+
+
     public void Login_OnClick()
     {
         Debug.Log("CLICKED");
@@ -101,18 +139,48 @@ public class SideMenuBehaviour : MonoBehaviour {
         loginMenu.IsVisible = false;
         registerMenu.IsVisible = false;
         defaultMenu.IsVisible = true;
+    }
 
+    public void ViewLetters_OnClick()
+    {
+        sideMenu.IsVisible = false;
+        sideMenu.Update();
+        letterMenu.IsVisible = true;
+        letterMenu.Update();
+        letterListMenu.IsVisible = true;
+        letterListMenu.Update();
+        SetLetterText();
+    }
+
+    public void ViewLetters_Back_OnClick()
+    {
+        sideMenu.IsVisible = true;
+        sideMenu.Update();
+        letterMenu.IsVisible = false;
+        letterMenu.Update();
+        letterListMenu.IsVisible = false;
+        letterListMenu.Update();
     }
     // Update is called once per frame
     void Update ()
     {
-        mainMenu.Update();
-        defaultMenu.Update();
-        registerMenu.Update();
-        loginMenu.Update();
-        
+        foreach (var menu in menus)
+        {
+            try
+            {
+                menu.Update();
+            }
+            catch (NullReferenceException)
+            {
+                Debug.Log(menu._tag);
+            }
+        }
     }
-
+    List<string> Letters = new List<string>() {"A", "A","C", "D", "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" };
+    void SetLetterText()
+    {
+        Helpers.GetObjectWithTag<Text>("FullMenu_Letter_List_Text").text = string.Join(",",Letters.ToArray());
+    }
     IEnumerator Register(string username, string password)
     {
         var form = new WWWForm();
@@ -151,8 +219,8 @@ public class SideMenuBehaviour : MonoBehaviour {
         {
             // Show results as text
             Debug.Log(www.downloadHandler.text);
-
             Debug.Log("Form upload complete!");
         }
     }
+
 }
