@@ -40,7 +40,8 @@ public class LetterSpawner : MonoBehaviour {
 				spawnCenter.z + randomOffset.y
 			);
 
-			GameObject spawnedObject = Instantiate(spawnObjects[index], randomPosition, Quaternion.identity);
+			Vector3 spawnFacing = new Vector3(1.0f, 0.0f, 0.0f);
+			GameObject spawnedObject = Instantiate(spawnObjects[index], randomPosition, Quaternion.LookRotation(spawnFacing));
 			spawnedObject.transform.parent = this.transform;
 			spawnedObject.AddComponent<DestroySelfAfterTime>();
 			spawnedObject.GetComponent<DestroySelfAfterTime>().lifeInSeconds = spawnDuration;
