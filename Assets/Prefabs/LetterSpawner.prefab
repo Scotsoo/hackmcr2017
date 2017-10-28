@@ -51,8 +51,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d4a2447b70c9471785b72484b081547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnFrequency: 10
-  spawnRadius: 10
+  spawnFrequency: 1
+  spawnRadius: 50
+  spawnDuration: 300
   spawnCenterObject: {fileID: 0}
   spawnObjects:
-  - {fileID: 1535721965178892, guid: afbfc34b56ca745a5bf6ff9da60f5c7a, type: 2}
+  - {fileID: 1737388925347558, guid: be7ab0a330af37a4bbc4495d61dfe57e, type: 2}
+  - {fileID: 1023979367784236, guid: da93c0e0f64c76749a94cff08a96a517, type: 2}
+  - {fileID: 1471579572721052, guid: db6517e436d7b58419efb6e716cdae20, type: 2}
+  - {fileID: 1358122989006232, guid: c347d3b5569670a48bf0e3db12c9cb66, type: 2}
+  - {fileID: 1326021684801128, guid: eb45887925f234841854be46107ac1f4, type: 2}
+  - {fileID: 1746473457806890, guid: 3cb93f3dd3c499a43a6d14431cf5dee7, type: 2}
+  - {fileID: 1684771104898486, guid: c3e88e52477c4a5448bc8d78ac15fe2c, type: 2}
+  - {fileID: 1668649431434108, guid: 525a6f3ef8d4a80428c1a5682f6f89f5, type: 2}
+  - {fileID: 1272338488275328, guid: 6e4fea9e2987e634e9d1db3f1842e166, type: 2}
+  - {fileID: 1023979367784236, guid: da93c0e0f64c76749a94cff08a96a517, type: 2}
+  - {fileID: 1023979367784236, guid: da93c0e0f64c76749a94cff08a96a517, type: 2}
+  - {fileID: 1080601145905256, guid: 145e1761bcd662f4aa97da662282b60b, type: 2}
+  - {fileID: 1307499733789206, guid: 3d3615a2dcd2dd843b88119261f410ec, type: 2}
+  - {fileID: 1088952929703636, guid: 060b0feb82173ce4f8dc15d3d069ba8b, type: 2}
+  - {fileID: 1413745852838634, guid: bff94ec6d09b42e458ba29db9a6cecd1, type: 2}
+  - {fileID: 1669975984593340, guid: 3dd01c740304f664ca4b7e0a305db7db, type: 2}
+  - {fileID: 1389820224147452, guid: b7bb868799260fa4ea05991418b81838, type: 2}
+  - {fileID: 1018862167787256, guid: 7c80ab0821571c342acc9713b0930f56, type: 2}
+  - {fileID: 1292795727008172, guid: 090c26bbad58e514ab6009286efd8ec8, type: 2}
+  - {fileID: 1318753019226496, guid: f50c5a60cbda58b4b8c260c7ca094476, type: 2}
+  - {fileID: 1756954011018208, guid: fbc9c4daf951dcd409727c7892360a79, type: 2}
+  - {fileID: 1551832218932624, guid: bc613b77dc8c3b4439ff850f78a393e2, type: 2}
+  - {fileID: 1705612384262484, guid: 0f7386fa258392d4f9c602a20ae41fa3, type: 2}
+  - {fileID: 1874277805936934, guid: 80b6c176427a15841914c627d919322b, type: 2}
+  - {fileID: 1298849467218812, guid: 8919f7d9e9a22c7458650612d52fd369, type: 2}
+  - {fileID: 1663724717797312, guid: 5dd565aa801f05d44aa237d5e1f9b0b7, type: 2}
