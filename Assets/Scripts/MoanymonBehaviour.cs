@@ -24,7 +24,7 @@ public class MoanymonBehaviour: MonoBehaviour
         RaycastHit hit;
         Physics.Raycast(ray, out hit);
 
-        return gameObject == hit.transform.gameObject;
+        return hit.transform != null && hit.transform.gameObject != null && gameObject == hit.transform.gameObject;
     }
 }
 
