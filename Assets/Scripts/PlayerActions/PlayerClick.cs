@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.PlayerActions
 {
-    public class PlayerClick : MoneymonBehaviour
+    public class PlayerClick : MoanymonBehaviour
     {
         //// Use this for initialization
         //void Start()

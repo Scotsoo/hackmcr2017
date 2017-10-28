@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts
 {
-    public class MoneymonBehaviour: MonoBehaviour
+    public class MoanymonBehaviour: MonoBehaviour
     {
         public GameObject Camera;
 
