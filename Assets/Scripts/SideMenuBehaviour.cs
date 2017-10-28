@@ -58,7 +58,14 @@ public class SideMenuBehaviour : MonoBehaviour {
         mainMenu.Update();
         loginMenu.Update();
     }
+    public void Register_OnClick()
+    {
+        defaultMenu.IsVisible = false;
+        registerMenu.IsVisible = true;
+        mainMenu.Update();
+        registerMenu.Update();
 
+    }
     public void HideMenu_OnClick()
     {
         mainMenu.IsVisible = !mainMenu.IsVisible;
@@ -66,10 +73,13 @@ public class SideMenuBehaviour : MonoBehaviour {
         SetMenuText();
     }
 
+
+
     public void Back_OnClick()
     {
         loginMenu.IsVisible = false;
         registerMenu.IsVisible = false;
+        defaultMenu.IsVisible = true;
 
     }
     // Update is called once per frame
