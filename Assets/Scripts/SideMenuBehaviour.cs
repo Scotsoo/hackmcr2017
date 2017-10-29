@@ -8,7 +8,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class SideMenuBehaviour : MonoBehaviour {
+public class SideMenuBehaviour : MonoBehaviour
+{
 
 
     public class Menu
@@ -37,7 +38,7 @@ public class SideMenuBehaviour : MonoBehaviour {
             IsVisible = defaultVisible;
         }
 
-  
+
     }
 
     public class MainMenu : Menu
@@ -46,7 +47,7 @@ public class SideMenuBehaviour : MonoBehaviour {
         {
         }
     }
- 
+
 
     private Button showMenuButton;
 
@@ -75,9 +76,9 @@ public class SideMenuBehaviour : MonoBehaviour {
     private InputField _complaintInput;
     private Text _complaintRemaining;
     // Use this for initialization
-    void Start ()
+    void Start()
     {
-        sideMenu = new SideMenu("SideMenu",true);
+        sideMenu = new SideMenu("SideMenu", true);
         mainMenu = new SideMenu("SideMenu_Main", false);
         defaultMenu = new SideMenu("SideMenu_Default", true);
         loginMenu = new SideMenu("SideMenu_Login");
@@ -92,12 +93,14 @@ public class SideMenuBehaviour : MonoBehaviour {
         _inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         _complaintInput = Helpers.GetObjectWithTag<InputField>("FullMenu_Complaint_Input");
         _complaintInput.onValueChanged.AddListener(delegate { ComplaintOnChange(); });
+        _complaintInput.lineType = InputField.LineType.MultiLineNewline;
         _complaintRemaining = Helpers.GetObjectWithTag<Text>("FullMenu_Complaint_Remaining");
     }
 
     public void ComplaintOnChange()
     {
-        CalculateRemainingLetters();
+        if (!surpress)
+            CalculateRemainingLetters();
     }
 
     void SetMenuText()
@@ -176,6 +179,11 @@ public class SideMenuBehaviour : MonoBehaviour {
         complaintSubmitMenu.Update();
         CalculateRemainingLetters();
     }
+
+    public void MakeComplaint_Submit_OnClick()
+    {
+        MakeComplaint(_complaintInput.text);
+    }
     public void ViewLetters_Back_OnClick()
     {
         sideMenu.IsVisible = true;
@@ -188,7 +196,7 @@ public class SideMenuBehaviour : MonoBehaviour {
         complaintSubmitMenu.Update();
     }
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
         foreach (var menu in menus)
         {
@@ -202,58 +210,93 @@ public class SideMenuBehaviour : MonoBehaviour {
             }
         }
     }
-    List<string> Letters = new List<string>() {"A", "A","C", "D", "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A",
-        "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D",
-    "M","M","M","M","M","J","j","J","j","J","J","J",};
+    //List<string> Letters = new List<string>() {"A", "A","C", "D", "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A",
+    //    "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D",
+    //"M","M","M","M","M","J","j","J","j","J","J","J",};
     void SetLetterText()
     {
-        foreach (var letter in Letters)
-        {
-            _inventory.Add(letter);
-        }
         var items = _inventory.Dump();
-        items.Sort();
-        Helpers.GetObjectWithTag<Text>("FullMenu_Letter_List_Text").text = string.Join(",",items.ToArray());
+        Helpers.GetObjectWithTag<Text>("FullMenu_Letter_List_Text").text = string.Join(",", items.Select(i => string.Format("{0}({1})", i.Character, i.CaptureCount)).ToArray());
 
     }
 
+    private string lastText = "";
+    private bool surpress = false;
     void CalculateRemainingLetters()
     {
         var text = _complaintInput.text;
         var items = _inventory.Dump().ToArray().ToList();
-        //var text = "ABCDAG";
         var newText = "";
-        var grouped = items.GroupBy(i => i);
-        var usedLetters = new List<string>() { };
-        var txList = text.ToList().Select(i => i.ToString().ToUpper());
-        foreach (var tx in txList)
+        var txList = text.ToList().Select(i => i.ToString().ToUpper()).ToList();
+        if (lastText.Length > text.Length)
         {
-            if (tx == " ")
+            for (var i = 0; i < lastText.Length - text.Length; i++)
+            {
+                var item = items.FirstOrDefault(o => o.Character == lastText.Last().ToString());
+                if (item != null)
+                    item.CaptureCount += 1;
+            }
+            newText = text.ToUpper();
+            lastText = newText;
+
+        }
+        else if (txList.Any())
+        {
+            newText += lastText;
+            var last = txList.Last();
+            var first = items.FirstOrDefault(i => i.Character == last);
+            if (last == " ")
             {
                 newText += " ";
-                continue;
-            };
-            var index = items.IndexOf(tx);
-            if (index == -1) continue;
-
-            newText += tx;
-            items.RemoveAt(index);
-
-            if (items.IndexOf(tx) == -1)
-                usedLetters.Add(tx);
+                lastText = newText;
+            }
+            else if (first != null)
+            {
+                if (first.CaptureCount != 0)
+                {
+                    newText += last;
+                    lastText = newText;
+                    first.CaptureCount -= 1;
+                }
+            }
         }
-        grouped = items.GroupBy(i => i);
-        var outArray = grouped.Select(i => string.Format("{0}({1})", i.Key, i.Count())).ToList();
-        foreach (var usedLetter in usedLetters)
-        {
-            outArray.Add(string.Format("{0}({1})", usedLetter, 0));
-        }
+        var outArray = items.Select(i => string.Format("{0}({1})", i.Character, i.CaptureCount)).ToList();
         outArray.Sort();
         if (newText != text)
         {
+            //hack to surpress this re-triggering this to retrigger this to retrigger this to retrigger this to retrigger this to retrigger this to retrigger this to retrigger this to retrigger this to retrigger this to retrigger this to retrigger this...
+            surpress = true;
             _complaintInput.text = newText;
+            surpress = false;
         }
         _complaintRemaining.text = "Letters Remaining: \n" + string.Join(" ", outArray.ToArray());
+
+    }
+
+    void MakeComplaint(string complaint)
+    {
+        var form = new WWWForm();
+        form.AddField("complaint", complaint);
+        var www = UnityWebRequest.Post("localhost:3000/complain", form);
+        www.SendWebRequest();
+
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            var input = _complaintInput.text.ToUpper().ToArray().Select(i => i.ToString()).ToList();
+            for (var i = 0; i < input.Count(); i++)
+            {
+                _inventory.Remove(input[i]);
+            }
+            _complaintInput.text = "";
+            // Show results as text
+            Debug.Log(www.downloadHandler.text);
+
+            Debug.Log("Form upload complete!");
+        }
     }
     IEnumerator Register(string username, string password)
     {
@@ -298,3 +341,4 @@ public class SideMenuBehaviour : MonoBehaviour {
     }
 
 }
+
