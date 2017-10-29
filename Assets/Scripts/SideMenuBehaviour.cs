@@ -228,11 +228,12 @@ public class SideMenuBehaviour : MonoBehaviour
         var items = _inventory.Dump().ToArray().ToList();
         var newText = "";
         var txList = text.ToList().Select(i => i.ToString().ToUpper()).ToList();
-        if (lastText.Length > text.Length)
+        var len = lastText.Length;
+        if (len > text.Length)
         {
-            for (var i = 0; i < lastText.Length - text.Length; i++)
+            for (var i = 0; i < len - text.Length; i++)
             {
-                var item = items.FirstOrDefault(o => o.Character == lastText.Last().ToString());
+                var item = items.FirstOrDefault(o => o.Character == lastText[len - 1 -i].ToString());
                 if (item != null)
                     item.CaptureCount += 1;
             }
