@@ -20,6 +20,10 @@ TagManager:
   - FullMenu_Main
   - FullMenu_Letter_List
   - FullMenu_Letter_List_Text
+  - Letter
+  - FullMenu_Complaint_Input
+  - FullMenu_Complaint_Remaining
+  - FullMenu_Letter_Complaint
   layers:
   - Default
   - TransparentFX

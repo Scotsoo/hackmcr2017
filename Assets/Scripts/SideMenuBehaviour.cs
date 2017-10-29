@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -66,14 +67,18 @@ public class SideMenuBehaviour : MonoBehaviour {
     private static MainMenu letterMenu;
 
     private static MainMenu letterListMenu;
+    private static MainMenu complaintSubmitMenu;
 
     private List<Menu> menus;
-    
+
+    private Inventory _inventory;
+    private InputField _complaintInput;
+    private Text _complaintRemaining;
     // Use this for initialization
     void Start ()
     {
-        sideMenu = new SideMenu("SideMenu", true);
-        mainMenu = new SideMenu("SideMenu_Main", true);
+        sideMenu = new SideMenu("SideMenu",true);
+        mainMenu = new SideMenu("SideMenu_Main", false);
         defaultMenu = new SideMenu("SideMenu_Default", true);
         loginMenu = new SideMenu("SideMenu_Login");
         registerMenu = new SideMenu("SideMenu_Register");
@@ -81,9 +86,18 @@ public class SideMenuBehaviour : MonoBehaviour {
         showMenuButtonText = showMenuButton.GetComponentInChildren(typeof(Text)).GetComponent<Text>();
         letterMenu = new MainMenu("FullMenu_Main");
         letterListMenu = new MainMenu("FullMenu_Letter_List");
+        complaintSubmitMenu = new MainMenu("FullMenu_Letter_Complaint");
         SetMenuText();
-        menus = new List<Menu> { mainMenu, defaultMenu, registerMenu, loginMenu, sideMenu, letterMenu };
+        menus = new List<Menu> { mainMenu, defaultMenu, registerMenu, loginMenu, sideMenu, letterMenu, letterListMenu, complaintSubmitMenu };
+        _inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        _complaintInput = Helpers.GetObjectWithTag<InputField>("FullMenu_Complaint_Input");
+        _complaintInput.onValueChanged.AddListener(delegate { ComplaintOnChange(); });
+        _complaintRemaining = Helpers.GetObjectWithTag<Text>("FullMenu_Complaint_Remaining");
+    }
 
+    public void ComplaintOnChange()
+    {
+        CalculateRemainingLetters();
     }
 
     void SetMenuText()
@@ -152,6 +166,16 @@ public class SideMenuBehaviour : MonoBehaviour {
         SetLetterText();
     }
 
+    public void MakeComplaint_OnClick()
+    {
+        sideMenu.IsVisible = false;
+        sideMenu.Update();
+        letterMenu.IsVisible = true;
+        letterMenu.Update();
+        complaintSubmitMenu.IsVisible = true;
+        complaintSubmitMenu.Update();
+        CalculateRemainingLetters();
+    }
     public void ViewLetters_Back_OnClick()
     {
         sideMenu.IsVisible = true;
@@ -160,6 +184,8 @@ public class SideMenuBehaviour : MonoBehaviour {
         letterMenu.Update();
         letterListMenu.IsVisible = false;
         letterListMenu.Update();
+        complaintSubmitMenu.IsVisible = false;
+        complaintSubmitMenu.Update();
     }
     // Update is called once per frame
     void Update ()
@@ -176,10 +202,58 @@ public class SideMenuBehaviour : MonoBehaviour {
             }
         }
     }
-    List<string> Letters = new List<string>() {"A", "A","C", "D", "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" };
+    List<string> Letters = new List<string>() {"A", "A","C", "D", "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A",
+        "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D" , "A", "A", "C", "D",
+    "M","M","M","M","M","J","j","J","j","J","J","J",};
     void SetLetterText()
     {
-        Helpers.GetObjectWithTag<Text>("FullMenu_Letter_List_Text").text = string.Join(",",Letters.ToArray());
+        foreach (var letter in Letters)
+        {
+            _inventory.Add(letter);
+        }
+        var items = _inventory.Dump();
+        items.Sort();
+        Helpers.GetObjectWithTag<Text>("FullMenu_Letter_List_Text").text = string.Join(",",items.ToArray());
+
+    }
+
+    void CalculateRemainingLetters()
+    {
+        var text = _complaintInput.text;
+        var items = _inventory.Dump().ToArray().ToList();
+        //var text = "ABCDAG";
+        var newText = "";
+        var grouped = items.GroupBy(i => i);
+        var usedLetters = new List<string>() { };
+        var txList = text.ToList().Select(i => i.ToString().ToUpper());
+        foreach (var tx in txList)
+        {
+            if (tx == " ")
+            {
+                newText += " ";
+                continue;
+            };
+            var index = items.IndexOf(tx);
+            if (index == -1) continue;
+
+            newText += tx;
+            items.RemoveAt(index);
+
+            if (items.IndexOf(tx) == -1)
+                usedLetters.Add(tx);
+        }
+        grouped = items.GroupBy(i => i);
+        var outArray = grouped.Select(i => string.Format("{0}({1})", i.Key, i.Count())).ToList();
+        foreach (var usedLetter in usedLetters)
+        {
+            outArray.Add(string.Format("{0}({1})", usedLetter, 0));
+        }
+        outArray.Sort();
+        if (newText != text)
+        {
+            _complaintInput.text = newText;
+        }
+        _complaintRemaining.text = "Letters Remaining: \n" + string.Join(" ", outArray.ToArray());
     }
     IEnumerator Register(string username, string password)
     {
