@@ -10,8 +10,21 @@ TagManager:
   - SideMenu_Register
   - SideMenu_ShowMenu
   - SideMenu_Main
+  - SideMenu_Register_Username
+  - SideMenu_Register_Password
+  - SideMenu_Register_ConfirmPassword
+  - SideMenu_Login_Username
+  - SideMenu_Login_Password
+  - FullMenu_Letters_All
+  - FullMenu_Letters_Edit
+  - FullMenu_Main
+  - FullMenu_Letter_List
+  - FullMenu_Letter_List_Text
   - Letter
   - Map
+  - FullMenu_Complaint_Input
+  - FullMenu_Complaint_Remaining
+  - FullMenu_Letter_Complaint
   layers:
   - Default
   - TransparentFX
