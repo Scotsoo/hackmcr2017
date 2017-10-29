@@ -11,6 +11,7 @@ TagManager:
   - SideMenu_ShowMenu
   - SideMenu_Main
   - Letter
+  - Map
   layers:
   - Default
   - TransparentFX

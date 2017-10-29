@@ -8,39 +8,56 @@ public class PlayerPinKeyboardControl : MoanymonBehaviour
 
 	private bool initialised = false;
 
-    new void Start () {
-		base.Start();
-	    Input.location.Start(10, 0.1f); // accuracy, every 0.1m
-        _prevLatLon = Vector2.zero;
-	}
+ //   new void Start () {
+	//	base.Start();
+	//    Input.location.Start(10, 0.1f); // accuracy, every 0.1m
+ //       _prevLatLon = Vector2.zero;
+	//}
 	
 	// Update is called once per frame
 	void Update () {
-	    LocationServiceStatus currStatus = Input.location.status;
+        LocationServiceStatus currStatus = Input.location.status;
         Vector3 velocity = Vector3.zero;
 
-	    switch (currStatus)
+	    if (Input.GetKey(KeyCode.W))
 	    {
-	        case LocationServiceStatus.Initializing:
-                Debug.Log("Starting GPS...");
-	            break;
-	        case LocationServiceStatus.Running:
-				if (!initialised) {
-					Debug.Log("Setting initial position...");
-					Vector2 newLatLon = new Vector2(Input.location.lastData.latitude, Input.location.lastData.longitude);
-					_prevLatLon = newLatLon;
-					initialised = true;
-				} else {
-					Debug.Log("Calculating new position...");
-					velocity = CalculateNewPosition();
-				}
-	            break;
-	        case LocationServiceStatus.Stopped:
-	        case LocationServiceStatus.Failed:
-	        default:
-	            Debug.Log("No GPS available");
-	            break;
+	        velocity += new Vector3(Speed, 0, 0);
 	    }
+	    if (Input.GetKey(KeyCode.S))
+	    {
+	        velocity -= new Vector3(Speed, 0, 0);
+	    }
+	    if (Input.GetKey(KeyCode.A))
+	    {
+	        velocity += new Vector3(0, 0, Speed);
+	    }
+	    if (Input.GetKey(KeyCode.D))
+	    {
+	        velocity -= new Vector3(0, 0, Speed);
+	    }
+
+    //    switch (currStatus)
+	   // {
+	   //     case LocationServiceStatus.Initializing:
+    //            Debug.Log("Starting GPS...");
+	   //         break;
+	   //     case LocationServiceStatus.Running:
+				//if (!initialised) {
+				//	Debug.Log("Setting initial position...");
+				//	Vector2 newLatLon = new Vector2(Input.location.lastData.latitude, Input.location.lastData.longitude);
+				//	_prevLatLon = newLatLon;
+				//	initialised = true;
+				//} else {
+				//	Debug.Log("Calculating new position...");
+				//	velocity = CalculateNewPosition();
+				//}
+	   //         break;
+	   //     case LocationServiceStatus.Stopped:
+	   //     case LocationServiceStatus.Failed:
+	   //     default:
+	   //         Debug.Log("No GPS available");
+	   //         break;
+	   // }
 
 		transform.position += velocity;
 		Camera.transform.position += velocity;
