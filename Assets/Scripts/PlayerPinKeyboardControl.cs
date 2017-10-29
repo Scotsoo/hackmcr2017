@@ -6,6 +6,8 @@ public class PlayerPinKeyboardControl : MoanymonBehaviour
 	public float Speed = 112000.0f;
     private Vector2 _prevLatLon;
 
+	private bool initialised = false;
+
     new void Start () {
 		base.Start();
 	    Input.location.Start(10, 0.1f); // accuracy, every 0.1m
@@ -23,8 +25,15 @@ public class PlayerPinKeyboardControl : MoanymonBehaviour
                 Debug.Log("Starting GPS...");
 	            break;
 	        case LocationServiceStatus.Running:
-                Debug.Log("Calculating new position...");
-	            velocity = CalculateNewPosition();
+				if (!initialised) {
+					Debug.Log("Setting initial position...");
+					Vector2 newLatLon = new Vector2(Input.location.lastData.latitude, Input.location.lastData.longitude);
+					_prevLatLon = newLatLon;
+					initialised = true;
+				} else {
+					Debug.Log("Calculating new position...");
+					velocity = CalculateNewPosition();
+				}
 	            break;
 	        case LocationServiceStatus.Stopped:
 	        case LocationServiceStatus.Failed:
@@ -33,11 +42,8 @@ public class PlayerPinKeyboardControl : MoanymonBehaviour
 	            break;
 	    }
 
-	    if (velocity != Vector3.zero)
-	    {
-	        transform.position += velocity;
-	        Camera.transform.position += velocity;
-        }
+		transform.position += velocity;
+		Camera.transform.position += velocity;
 	}
 
     Vector3 CalculateNewPosition()
