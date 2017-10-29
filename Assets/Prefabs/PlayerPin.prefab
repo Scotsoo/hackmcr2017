@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4962848388238362}
   - component: {fileID: 114740904074576594}
+  - component: {fileID: 136479238547756628}
   m_Layer: 0
   m_Name: PlayerPin
   m_TagString: Untagged
@@ -36,7 +37,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4689318380507904}
   - component: {fileID: 33431218105110324}
-  - component: {fileID: 135548120757594696}
   - component: {fileID: 23545778585631412}
   m_Layer: 0
   m_Name: PlayerPinHead
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 33317395000430690}
   - component: {fileID: 136786723893950352}
   - component: {fileID: 23036967275312744}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PlayerPinCatchRadius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4813707878343224}
   - component: {fileID: 33525303988661152}
-  - component: {fileID: 136727882503061578}
   - component: {fileID: 23458017635053066}
   m_Layer: 0
   m_Name: PlayerPinBody
@@ -127,7 +126,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1214999031296884}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.29999992, y: 0, z: 16.000025}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4689318380507904}
@@ -270,30 +269,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79b1281546e343e5a8f36ae56310a3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
---- !u!135 &135548120757594696
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1691929170047096}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &136727882503061578
+  Camera: {fileID: 0}
+  Speed: 0.1
+--- !u!136 &136479238547756628
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1966994627089800}
+  m_GameObject: {fileID: 1214999031296884}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.125
-  m_Height: 2
+  m_Radius: 0.8
+  m_Height: 5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &136786723893950352
