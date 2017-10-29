@@ -1,56 +1,56 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class PlayerPinKeyboardControl : MoanymonBehaviour {
-
-	private Vector3 _velocity = Vector3.zero;
+public class PlayerPinKeyboardControl : MoanymonBehaviour
+{
 	public float Speed = 112000.0f;
-	private bool locationInitialised = false;
-	 
-	private Vector2 prevLatLon = Vector2.zero;
+    private Vector2 _prevLatLon;
 
-	void Start () {
+    new void Start () {
 		base.Start();
-        Input.location.Start(1,1);
+	    Input.location.Start(10, 0.1f); // accuracy, every 0.1m
+        _prevLatLon = Vector2.zero;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		_velocity = Vector3.zero;
+	    LocationServiceStatus currStatus = Input.location.status;
+        Vector3 velocity = Vector3.zero;
 
-		if (locationInitialised) {
-			Vector2 newLatLon = new Vector2(Input.location.lastData.latitude, Input.location.lastData.longitude);
-			Vector2 deltaLocation = newLatLon - prevLatLon;
+	    switch (currStatus)
+	    {
+	        case LocationServiceStatus.Initializing:
+                Debug.Log("Starting GPS...");
+	            break;
+	        case LocationServiceStatus.Running:
+                Debug.Log("Calculating new position...");
+	            velocity = CalculateNewPosition();
+	            break;
+	        case LocationServiceStatus.Stopped:
+	        case LocationServiceStatus.Failed:
+	        default:
+	            Debug.Log("No GPS available");
+	            break;
+	    }
 
-			this._velocity = new Vector3(deltaLocation.x * Speed, 0.0f, deltaLocation.y * Speed);
-
-			Debug.Log(prevLatLon.x + "," + prevLatLon.y + "|" + newLatLon.x + "," + newLatLon.y + "|" + _velocity.x + "," + _velocity.z);
-
-			prevLatLon = newLatLon;
-		}
-
-        if (!locationInitialised) {
-			if (Input.location.status == LocationServiceStatus.Failed) {
-				print("Unable to determine device location");
-			} else if (Input.location.status != LocationServiceStatus.Initializing) {
-				locationInitialised = true;
-				prevLatLon = new Vector2(Input.location.lastData.latitude, Input.location.lastData.longitude);
-			}
-		}
-
-		// if (Input.GetKey(KeyCode.W)) {
-		// 	_velocity += new Vector3(Speed, 0, 0);
-		// }
-		// if (Input.GetKey(KeyCode.S)) {
-		// 	_velocity -= new Vector3(Speed, 0, 0);
-		// }
-		// if (Input.GetKey(KeyCode.A)) {
-		// 	_velocity += new Vector3(0, 0, Speed);
-		// }
-		// if (Input.GetKey(KeyCode.D)) {
-		// 	_velocity -= new Vector3(0, 0, Speed);
-		// }
-
-		transform.position += _velocity;
-		Camera.transform.position += this._velocity;
+	    if (velocity != Vector3.zero)
+	    {
+	        transform.position += velocity;
+	        Camera.transform.position += velocity;
+        }
 	}
+
+    Vector3 CalculateNewPosition()
+    {
+        Vector2 newLatLon = new Vector2(Input.location.lastData.latitude, Input.location.lastData.longitude);
+        Debug.Log(string.Format("Current Location - Lat: {0} Long: {1}", newLatLon.x, newLatLon.y));
+        Vector2 delta = newLatLon - _prevLatLon;
+        Debug.Log(string.Format("Delta change - Lat: {0} Long: {1}", delta.x, delta.y));
+        Vector3 velocity = new Vector3(delta.x * Speed, 0, delta.y * Speed);
+        Debug.Log(string.Format("Velocity calculated - X: {0}, Y: {1}, Z: {2}", velocity.x, velocity.y, velocity.z));
+
+        _prevLatLon = newLatLon;
+
+        return velocity;
+    }
 }
